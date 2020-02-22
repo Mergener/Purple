@@ -16,6 +16,7 @@ CMakeFiles
 
 # Binary files
 *.o
+*.so
 *.obj
 *.a
 *.exe
