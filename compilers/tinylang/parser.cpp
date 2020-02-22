@@ -24,8 +24,11 @@ static StatementNode* genStatementNode() {
 
 /*
 	Generates a function declaration node. Expects the current token type to be 'TokenType::FunctionKeyword'.
+	Right after this function call, tokenIdx must be either:
+		- The index of a valid statement begin token in lr if the function was not marked as native or extern.
+		- The index of a valid base node begin token in lr if the function was marked as native or extern.
 */
-static FuncDeclNode* genFuncDeclNode(const LexResults& lr, int& tokenIdx, bool currFuncIsNative) {
+static FuncDeclNode* genFuncDeclNode(const LexResults& lr, int& tokenIdx, bool funcMarkedNative) {
 	FuncDeclNode* ret;
 
 	int declLine = lr.tokens[tokenIdx].line;
@@ -90,7 +93,7 @@ static FuncDeclNode* genFuncDeclNode(const LexResults& lr, int& tokenIdx, bool c
 
 	// Read return type
 	tokenIdx++;
-	if (lr.tokens.size() == tokenIdx && currFuncIsNative) {
+	if (lr.tokens.size() == tokenIdx && funcMarkedNative) {
 		// Native function of type 'native func foo()' and end of file
 		returnTypeName = "void";
 	} else if (lr.tokens.size() > tokenIdx) {				
@@ -102,8 +105,6 @@ static FuncDeclNode* genFuncDeclNode(const LexResults& lr, int& tokenIdx, bool c
 
 			if (lr.tokens[tokenIdx].tokenType == TokenType::SymbolName) {
 				returnTypeName = lr.tokens[tokenIdx].getTextCopy();
-
-				advanceTokenOrThrow(lr, tokenIdx);
 			} else {
 				throw UnexpectedTokenError(lr.tokens[tokenIdx].getTextCopy(), lr.fileName, lr.tokens[tokenIdx].line, lr.tokens[tokenIdx].column);
 			}
@@ -118,7 +119,15 @@ static FuncDeclNode* genFuncDeclNode(const LexResults& lr, int& tokenIdx, bool c
 		throw UnexpectedEofError(lr.fileName, lr.tokens[tokenIdx - 1].line, lr.tokens[tokenIdx - 1].column);
 	}
 
-	ret = new FuncDeclNode(fnName, returnTypeName, paramTypeNames, currFuncIsNative, declLine, declColumn);
+	if (!funcMarkedNative) {
+		// If the function wasn't marked native, it means that the last token that was read was the
+		// return type name. In this case, the current token is a ScopeStart, which means we need to 
+		// move the current token index to one token after in order to fulfill this function's return
+		// promise.
+		advanceTokenOrThrow(lr, tokenIdx);
+	}
+
+	ret = new FuncDeclNode(fnName, returnTypeName, paramTypeNames, funcMarkedNative, declLine, declColumn);
 
 	return ret;
 }
@@ -150,6 +159,9 @@ static BaseNode* genBaseNode(const LexResults& lr, int& tokenIdx) {
 		}
 		case TokenType::FunctionKeyword: {
 			ret = genFuncDeclNode(lr, tokenIdx, currFuncIsNative);
+			if (!currFuncIsNative) {
+
+			}
 			currFuncIsNative = false;
 			break;
 		}

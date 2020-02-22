@@ -3,7 +3,12 @@
 
 namespace tinylang {
 
+
 class Type {
+public:
+
+
+private:
 
 };
 

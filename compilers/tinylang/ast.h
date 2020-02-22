@@ -51,7 +51,8 @@ struct FuncDeclNode : BaseNode {
 		: BaseNode(line, column), funcName(funcName), paramTypeNames(paramTypeNames), isNative(isNative) { }
 };
 
-struct RValue {
+class RValue {
+public:
 	virtual bool isConst() = 0;
 };
 
