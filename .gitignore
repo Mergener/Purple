@@ -1,0 +1,23 @@
+# Cmake stuff (except CMakeLists)
+*/Makefile
+Makefile
+
+*/CmakeCache.txt
+CmakeCache.txt
+
+*.cmake
+
+CMakeFiles
+*/CMakeFiles
+
+# Ide/Code editor stuff
+.vscode
+.vs
+
+# Binary files
+*.o
+*.obj
+*.a
+*.exe
+*.lib
+*.dll
