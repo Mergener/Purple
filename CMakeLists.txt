@@ -9,6 +9,8 @@ set (CMAKE_CXX_STANDARD 17)
 
 include_directories(global/include)
 
+add_definitions(PURPLE_COMPILING_LIBRARY)
+
 add_subdirectory(global)
 add_subdirectory(vm)
 add_subdirectory(purlibs)
