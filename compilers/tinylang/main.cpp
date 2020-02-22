@@ -15,13 +15,9 @@ int main(int argc, char** argv) {
 			return -1;
 
 		std::ifstream stream(argv[1]);
-
 		std::string fileContents((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
 		
 		LexResults results = lex(fileContents, argv[1]);
-
-		int i = 0;
-		genBaseNode(results, i);
 
 		if (results.clean) {
 			std::cout << "Compilation completed succesfully.\n";
@@ -30,9 +26,11 @@ int main(int argc, char** argv) {
 		}
 
 	} catch (const CompilationError& compErr) {
-		
 		std::cerr << compErr.what() << std::endl;
-
+	} catch (const std::bad_alloc&) {
+		std::cerr << "[FATAL ERROR] The compilation proccess was aborted because the proccess ran out of memory." << std::endl;
+	} catch (const std::exception& e) {
+		std::cerr << "[FATAL ERROR] An unknown error has occurred. Error message: " << e.what() << std::endl;
 	}
 	return 0;
 }
