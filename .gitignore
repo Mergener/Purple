@@ -22,3 +22,4 @@ CMakeFiles
 *.exe
 *.lib
 *.dll
+*.out
