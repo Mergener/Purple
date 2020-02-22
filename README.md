@@ -15,21 +15,24 @@ Since this is a very informal personal project, I might not be maintaning it in 
 	- Improve documentation
 
 - VM:
-	- Add and implement instructions for...
+	- Add and implement instructions for:
 		- Simple jump;
 		- Conditional jumps;
 		- Heap access/allocation;
+		- Bitwise operations;
+		- Indirect function calls;
 	- Implement a basic garbage collector
 	- Improve the standalone executable
 	- Add support for external bytecode dependencies
 	- Implement cross-platform solution for dynamically loading native code and
-	binding native procedures to Purple assemblies.
+	binding native procedures to Purple assemblies without the need of creating a C/C++
+	executable wrapper
 
 - Tinylang:
 	- Finish implementing parser
 	- Start implementing code generator
 	- Improve error messages
 	- Implement a minimal argsparser for main that allows the user to customize the following settings:
-		- Source files to be compiled
-		- Build output filepath and filename
-		- Build output type (Purple library or executable)
+		- Source files to be compiled;
+		- Build output filepath and filename;
+		- Build output type (Purple library or executable);
