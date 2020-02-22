@@ -1,0 +1,18 @@
+#ifndef PURPLE_ERROR_H
+#define PURPLE_ERROR_H
+
+typedef enum {
+
+	PUR_ERR_SUCCESS = 0x0, // No errors
+
+	PUR_ERR_NOMEMORY,
+
+	PUR_ERR_UNEXPECTED_NULL,
+
+	PUR_ERR_FILE_NOT_FOUND,
+
+	PUR_ERR_BAD_ASSEMBLY
+
+} PurErrorCode;
+
+#endif // PURPLE_ERROR_H
