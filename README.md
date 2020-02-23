@@ -21,9 +21,14 @@ Since this is a very informal personal project, I might not be maintaning it in 
 		- Heap access/allocation;
 		- Bitwise operations;
 		- Indirect function calls;
+		- Floating point operations
 	- Implement a basic garbage collector
 	- Improve the standalone executable
 	- Add support for external bytecode dependencies
+	- Make code endian aware
+	- Implement simple standard library with:
+		- Simple functions for stdout and stdin
+		- Simple data structures
 	- Implement cross-platform solution for dynamically loading native code and
 	binding native procedures to Purple assemblies without the need of creating a C/C++
 	executable wrapper
